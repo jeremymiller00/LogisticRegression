@@ -34,7 +34,6 @@ public class LogisticRegression {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
 
-            // ArrayList<String> vocab;
             String line = null;
 
             while ((line = reader.readLine()) != null) {
@@ -59,13 +58,11 @@ public class LogisticRegression {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
 
-            // ArrayList<String> vocab;
             String line = null;
 
             while ((line = reader.readLine()) != null) {
                 Double c = Double.parseDouble(line)
                 coefficients.add(c);
-                // System.out.println(line);
                 System.out.println("Just added a coefficient");
             }
             reader.close();
@@ -89,6 +86,10 @@ public class LogisticRegression {
      */
     // private ArrayList<Int> vectorize() {
 
+        // apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
+        // intialize sero vector of length (POS types)
+        // for each POS type, for each word, add one to vector dimension count
+        // return POSVector
     // }
 
     /**
@@ -98,6 +99,7 @@ public class LogisticRegression {
      * @return logistic regression score of sentence vector: probability that the sentence is a "body sentence"
      */
     private Double calculateLRScore(ArrayList<Double> sentenceVector, ArrayList<Double>coefficients, Double intercept) {
+        Assert.assertEquals(sentenceVector.size, coefficients.size);
         double score = 0.0;
         score = score + intercept
         for (int i = 0, i < sentenceVector.size; i++)

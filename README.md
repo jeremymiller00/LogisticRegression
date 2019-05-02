@@ -81,4 +81,10 @@ Split into sentences using regex rules from implemented TextRank model ("\\.|[!?
 ## Steps
 * Write simple version which compiles at the command line on my machine
 
+## Tests
+* Class variables are the correct type of object
+* Scoring function works as expected
+* SetCoeffs and SetVocab works as expected
+
+
 
