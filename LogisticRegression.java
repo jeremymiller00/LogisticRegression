@@ -85,15 +85,25 @@ public class LogisticRegression {
 
     /**
      * Takes a tokenized sentence as input
-     * @return a vector or lenth 2000 representing the word counts of the input sentence
+     * @return a vector representing the part-of-speech counts of the input sentence
      */
     // private ArrayList<Int> vectorize() {
 
     // }
 
-    // private Double calculateScore() {
-
-    // }
+    /**
+     * @param sentenceVector: Sentence represented as part-of-speech vector: ArrayList<Double>
+     * @param coefficients: ArrayList<Double> of logistic regression coefficients
+     * @param intercept: intercept term of logistic regression model
+     * @return logistic regression score of sentence vector: probability that the sentence is a "body sentence"
+     */
+    private Double calculateLRScore(ArrayList<Double> sentenceVector, ArrayList<Double>coefficients, Double intercept) {
+        double score = 0.0;
+        score = score + intercept
+        for (int i = 0, i < sentenceVector.size; i++)
+            score = score + (sentenceVector[i] * coefficients[i]);
+        return score
+    }
 
     // private Double logit() {
 
