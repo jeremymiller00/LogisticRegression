@@ -24,7 +24,7 @@ public class LogisticRegression {
     // private ArrayList<String> vocabulary;
     // private ArrayList<Double> coefficients;
     // private Double intercept;
-    ArrayList<String> vocabulary = new ArrayList<String>();
+    ArrayList<String> partsOfSpeech = new ArrayList<String>();
     ArrayList<Double> coefficients = new ArrayList<Double>();
 
 
@@ -32,7 +32,6 @@ public class LogisticRegression {
      * Reads in the text file containing the coefficients
      */
     public void setCoefficients() { //ArrayList<String>
-        // String vocab;
         try {
             File fileName = new File("resources/LRCoefficients.txt");
             FileReader fileReader = new FileReader(fileName);
@@ -52,8 +51,31 @@ public class LogisticRegression {
         }
     }
 
-    public ArrayList<String> getVocabulary() {
-        return this.vocabulary;
+    /**
+     * Read in parts of speech from a text file
+     */
+    public void setPartsOfSpeech() { //ArrayList<String>
+        try {
+            File fileName = new File("resources/LRPartsOfSpeech.txt");
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader reader = new BufferedReader(fileReader);
+
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                partsOfSpeech.add(line);
+                System.out.println("Just added a part of speech");
+            }
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("Could not read in the file");
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public ArrayList<String> getPartsOfSpeech() {
+        return this.partsOfSpeech;
     }
 
     public ArrayList<Double> getCoefficients() {
@@ -78,12 +100,12 @@ public class LogisticRegression {
      * The sequence of features is vital here, but be intact from model on Databricks
      * https://cc-dev.cloud.databricks.com/?o=0#notebook/714597/command/729827
      */
-     private ArrayList<Int> vectorize() {
+     private ArrayList<Int> vectorizeSentence() {
 
         // apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
         // intialize zero vector of length (POS types)
         // for each POS type, for each word, add one to vector dimension count
-        // return POSVector
+        // return POSVectora
      }
 
     /**
@@ -100,6 +122,11 @@ public class LogisticRegression {
         return score;
     }
 
+    /**
+     * 
+     * @param score
+     * @return probability that the sentence is a "body" sentence
+     */
     private Double logit(Double score) { 
         return 1 / (1 + Math.exp(-1 * score));
      }
