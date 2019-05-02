@@ -21,8 +21,8 @@ public class LogisticRegression {
     // private ArrayList<String> vocabulary;
     // private ArrayList<Double> coefficients;
     // private Double intercept;
-    public ArrayList<String> vocabulary;
-    public ArrayList<String> coefficients;
+    ArrayList<String> vocabulary = new ArrayList<String>();
+    ArrayList<Double> coefficients = new ArrayList<Double>();
 
     /**
      * Reads in the text file containing the vocabulary
@@ -38,7 +38,7 @@ public class LogisticRegression {
             String line = null;
 
             while ((line = reader.readLine()) != null) {
-                this.vocabulary.add(line);
+                vocabulary.add(line);
                 // System.out.println(line);
                 System.out.println("Just added a vocabulary word");
             }
@@ -63,7 +63,8 @@ public class LogisticRegression {
             String line = null;
 
             while ((line = reader.readLine()) != null) {
-                this.coefficients.add(line);
+                Double c = Double.parseDouble(line)
+                coefficients.add(c);
                 // System.out.println(line);
                 System.out.println("Just added a coefficient");
             }
@@ -78,7 +79,7 @@ public class LogisticRegression {
         return this.vocabulary;
     }
 
-    public ArrayList<String> getCoefficients() {
+    public ArrayList<Double> getCoefficients() {
         return this.coefficients;
     }
 
@@ -110,10 +111,10 @@ public class LogisticRegression {
 
     public static void main(String[] args) {
         LogisticRegression model = new LogisticRegression();
-        // model.setVocabulary();
-        // model.setCoefficients();
-        model.tester();
-        model.printVocab();
+        model.setVocabulary();
+        model.setCoefficients();
+        // model.tester();
+        // model.printVocab();
         
         
         // vectorize()
