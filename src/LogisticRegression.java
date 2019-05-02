@@ -115,15 +115,10 @@ public class LogisticRegression {
         }
     }
 
-    public void tester() {
-        this.vocabulary.add("test");
-    }
-
     public static void main(String[] args) {
         LogisticRegression model = new LogisticRegression();
         model.setVocabulary();
         model.setCoefficients();
-        // model.tester();
         // model.printVocab();
         
         
