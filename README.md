@@ -86,5 +86,13 @@ Split into sentences using regex rules from implemented TextRank model ("\\.|[!?
 * Scoring function works as expected
 * SetCoeffs and SetVocab works as expected
 
+## Code outline
+* get model coefficients, intercept
+* get POS tag list
+* tag sentence
+* vectorize tagged sentence to get score
+* pass score through logit function
+* probability get multiplied by TextRank score
+ * for words, word score mutiplied by probability of origin sentence
 
 
