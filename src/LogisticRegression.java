@@ -12,9 +12,12 @@
 
 */
 import java.io.*;
+import java.io.IOException;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.lang.Math.*;
 
 public class LogisticRegression {
 
@@ -24,29 +27,6 @@ public class LogisticRegression {
     ArrayList<String> vocabulary = new ArrayList<String>();
     ArrayList<Double> coefficients = new ArrayList<Double>();
 
-    /**
-     * Reads in the text file containing the vocabulary
-     */
-    public void setVocabulary() { //ArrayList<String>
-        // String vocab;
-        try {
-            File fileName = new File("resources/LRVocabulary.txt");
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader reader = new BufferedReader(fileReader);
-
-            String line = null;
-
-            while ((line = reader.readLine()) != null) {
-                vocabulary.add(line);
-                // System.out.println(line);
-                System.out.println("Just added a vocabulary word");
-            }
-            reader.close();
-        } catch (Exception e) {
-            System.out.println("Could not read in the file");
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Reads in the text file containing the coefficients
@@ -61,7 +41,7 @@ public class LogisticRegression {
             String line = null;
 
             while ((line = reader.readLine()) != null) {
-                Double c = Double.parseDouble(line)
+                Double c = Double.parseDouble(line);
                 coefficients.add(c);
                 System.out.println("Just added a coefficient");
             }
@@ -80,17 +60,31 @@ public class LogisticRegression {
         return this.coefficients;
     }
 
+
+    /**
+     * 
+     * @param sentence
+     * @return tagged sentence
+     */
+    public String tagSentence(String sentence) {
+    	MaxentTagger tagger = new MaxentTagger("english-caseless-left3words-distsim.tagger");
+    	String tagged = tagger.tagString(sentence);
+    	return tagged;
+    	}
+    
     /**
      * Takes a tokenized sentence as input
      * @return a vector representing the part-of-speech counts of the input sentence
+     * The sequence of features is vital here, but be intact from model on Databricks
+     * https://cc-dev.cloud.databricks.com/?o=0#notebook/714597/command/729827
      */
-    // private ArrayList<Int> vectorize() {
+     private ArrayList<Int> vectorize() {
 
         // apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
-        // intialize sero vector of length (POS types)
+        // intialize zero vector of length (POS types)
         // for each POS type, for each word, add one to vector dimension count
         // return POSVector
-    // }
+     }
 
     /**
      * @param sentenceVector: Sentence represented as part-of-speech vector: ArrayList<Double>
@@ -99,27 +93,20 @@ public class LogisticRegression {
      * @return logistic regression score of sentence vector: probability that the sentence is a "body sentence"
      */
     private Double calculateLRScore(ArrayList<Double> sentenceVector, ArrayList<Double>coefficients, Double intercept) {
-        Assert.assertEquals(sentenceVector.size, coefficients.size);
         double score = 0.0;
-        score = score + intercept
-        for (int i = 0, i < sentenceVector.size; i++)
+        score = score + intercept;
+        for (int i = 0; i < sentenceVector.size(); i++);
             score = score + (sentenceVector[i] * coefficients[i]);
-        return score
+        return score;
     }
 
-    // private Double logit() {
+    private Double logit(Double score) { 
+        return 1 / (1 + Math.exp(-1 * score));
+     }
 
-    // }
-
-    public void printVocab() {
-        for (String word: vocabulary) {
-            System.out.println(word);
-        }
-    }
 
     public static void main(String[] args) {
         LogisticRegression model = new LogisticRegression();
-        model.setVocabulary();
         model.setCoefficients();
         // model.printVocab();
         
