@@ -1,22 +1,24 @@
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+
+import org.junit.Assert;
 import org.junit.Test;
 
-import junit.framework.Assert;
 
 public class LogisticRegressionTest extends LogisticRegression {
 
 	@Test
-	public void testSetCoefficients() {
-		fail("Not yet implemented");
-	}
+//	public void testSetCoefficients() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testGetCoefficients() {
+//		fail("Not yet implemented");
+//	}
 
-	@Test
-	public void testGetCoefficients() {
-		fail("Not yet implemented");
-	}
-
-    public void testCalculateLRScore() {
+    @SuppressWarnings("deprecation")
+	public void testCalculateLRScore() {
         final ArrayList<Double> sentenceVector = new ArrayList<Double>();
         sentenceVector.add(1.0);
         sentenceVector.add(2.0);
@@ -31,20 +33,19 @@ public class LogisticRegressionTest extends LogisticRegression {
 
         final Double expected = 17.0;
         final Double actual = LogisticRegression.calculateLRScore(sentenceVector, coefficients, intercept);
-
-        Assert.assertEquals(actual, expected);        
+        Assert.assertEquals(actual, expected, 0.0);        
     }
 
     public void testLogit() {
         final Double exponent1 = 0.0;
         final double expected1 = 0.5;
         final Double actual1 = LogisticRegression.logit(exponent1);
-        Assert.assertEquals(expected1, actual1);
+        Assert.assertEquals(expected1, actual1, 0.0);
 
         final Double exponent2 = 1.0;
         final Double expected2 = Math.exp(1) / (1 + Math.exp(1));
         final Double actual2 = LogisticRegression.logit(exponent2);
-        Assert.assertEquals(expected2, actual2);
+        Assert.assertEquals(expected2, actual2, 0.0);
 
     }
 }

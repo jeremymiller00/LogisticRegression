@@ -91,6 +91,7 @@ public class LogisticRegression {
     public String tagSentence(String sentence) {
     	MaxentTagger tagger = new MaxentTagger("english-caseless-left3words-distsim.tagger");
     	String tagged = tagger.tagString(sentence);
+    	// return just the tags
     	return tagged;
     	}
     
@@ -100,7 +101,7 @@ public class LogisticRegression {
      * The sequence of features is vital here, but be intact from model on Databricks
      * https://cc-dev.cloud.databricks.com/?o=0#notebook/714597/command/729827
      */
-     private ArrayList<Int> vectorizeSentence() {
+     public ArrayList<Int> vectorizeSentence() {
 
         // apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
         // intialize zero vector of length (POS types)
@@ -114,7 +115,7 @@ public class LogisticRegression {
      * @param intercept: intercept term of logistic regression model
      * @return logistic regression score of sentence vector: probability that the sentence is a "body sentence"
      */
-    private Double calculateLRScore(ArrayList<Double> sentenceVector, ArrayList<Double>coefficients, Double intercept) {
+    public static Double calculateLRScore(ArrayList<Double> sentenceVector, ArrayList<Double>coefficients, Double intercept) {
         double score = 0.0;
         score = score + intercept;
         for (int i = 0; i < sentenceVector.size(); i++);
@@ -127,7 +128,7 @@ public class LogisticRegression {
      * @param score
      * @return probability that the sentence is a "body" sentence
      */
-    private Double logit(Double score) { 
+    public Double logit(Double score) { 
         return 1 / (1 + Math.exp(-1 * score));
      }
 
@@ -135,10 +136,11 @@ public class LogisticRegression {
     public static void main(String[] args) {
         LogisticRegression model = new LogisticRegression();
         model.setCoefficients();
-        // model.printVocab();
+        model.setPartsOfSpeech();
         
         
-        // vectorize()
+        
+        // vectorizeSentence()
         // calculateScore()
         // logit()
     }
