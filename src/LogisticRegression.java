@@ -26,6 +26,7 @@ public class LogisticRegression {
     // private Double intercept;
     ArrayList<String> partsOfSpeech = new ArrayList<String>();
     ArrayList<Double> coefficients = new ArrayList<Double>();
+    Double intercept = 0.0;
 
 
     /**
@@ -51,6 +52,30 @@ public class LogisticRegression {
         }
     }
 
+    /**
+     * Reads in the intercept value of the logistic regression model
+     */
+    public void setIntercept() {
+    	try {
+    		File filename = new File("resources/LRIntercept,txt");
+    		FileReader fileReader = new FileReader(fileName);
+            BufferedReader reader = new BufferedReader(fileReader);
+
+            String line = null;
+            
+            // need to make sure there is only one value!!
+            while ((line = reader.readLine()) != null) {
+                Double c = Double.parseDouble(line);
+                intercept.add(c);
+                System.out.println("Just added intercept");
+            }
+            reader.close();            
+            
+    	} catch (Exception e) {
+            System.out.println("Could not read in the file");
+            e.printStackTrace();
+    	}
+    }
     /**
      * Read in parts of speech from a text file
      */
@@ -82,6 +107,9 @@ public class LogisticRegression {
         return this.coefficients;
     }
 
+    public ArrayList<Double> getIntercept() {
+        return this.intercept;
+    }
 
     /**
      * 
