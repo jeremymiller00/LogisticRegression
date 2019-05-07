@@ -28,9 +28,9 @@ public class LogisticRegressionTest extends LogisticRegression {
         
         final Double intercept = 1.0;
 
-        final Double expected = 17.0;
+        final Double expected = 33.0;
         final Double actual = LogisticRegression.calculateLRScore(sentenceVector, coefficients, intercept);
-        assertEquals(actual, expected, 0.0);        
+        assertEquals(actual, expected, 0.00001);        
     }
 
     public void testLogit() {
@@ -42,7 +42,7 @@ public class LogisticRegressionTest extends LogisticRegression {
         final Double exponent2 = 1.0;
         final Double expected2 = Math.exp(1) / (1 + Math.exp(1));
         final Double actual2 = LogisticRegression.logit(exponent2);
-        assertEquals(expected2, actual2, 0.0);
+        assertEquals(expected2, actual2, 0.00001);
 
     }
 }
