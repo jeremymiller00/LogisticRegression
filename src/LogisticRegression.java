@@ -145,8 +145,9 @@ public class LogisticRegression {
     public static Double calculateLRScore(ArrayList<Double> sentenceVector, ArrayList<Double>coefficients, Double intercept) {
         double score = 0.0;
         score = score + intercept;
-        for (int i = 0; i < sentenceVector.size(); i++);
-            score = score + (sentenceVector[i] * coefficients[i]);
+        for (int i = 0; i < sentenceVector.size(); i++) {
+            score = score + (sentenceVector.get(i) * coefficients.get(i));
+        }
         return score;
     }
 
