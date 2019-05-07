@@ -1,7 +1,5 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -17,7 +15,6 @@ public class LogisticRegressionTest extends LogisticRegression {
 //		fail("Not yet implemented");
 //	}
 
-    @SuppressWarnings("deprecation")
 	public void testCalculateLRScore() {
         final ArrayList<Double> sentenceVector = new ArrayList<Double>();
         sentenceVector.add(1.0);
@@ -33,19 +30,19 @@ public class LogisticRegressionTest extends LogisticRegression {
 
         final Double expected = 17.0;
         final Double actual = LogisticRegression.calculateLRScore(sentenceVector, coefficients, intercept);
-        Assert.assertEquals(actual, expected, 0.0);        
+        assertEquals(actual, expected, 0.0);        
     }
 
     public void testLogit() {
         final Double exponent1 = 0.0;
         final double expected1 = 0.5;
         final Double actual1 = LogisticRegression.logit(exponent1);
-        Assert.assertEquals(expected1, actual1, 0.0);
+        assertEquals(expected1, actual1, 0.0);
 
         final Double exponent2 = 1.0;
         final Double expected2 = Math.exp(1) / (1 + Math.exp(1));
         final Double actual2 = LogisticRegression.logit(exponent2);
-        Assert.assertEquals(expected2, actual2, 0.0);
+        assertEquals(expected2, actual2, 0.0);
 
     }
 }

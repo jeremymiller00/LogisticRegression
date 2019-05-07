@@ -64,11 +64,10 @@ public class LogisticRegression {
             String line = null;
             
             // need to make sure there is only one value!!
-            while ((line = reader.readLine()) != null) {
-                Double c = Double.parseDouble(line);
-                intercept.add(c);
-                System.out.println("Just added intercept");
-            }
+            line = reader.readLine()
+            Double c = Double.parseDouble(line);
+            intercept.add(c);
+            System.out.println("Just added intercept");
             reader.close();            
             
     	} catch (Exception e) {
@@ -112,7 +111,7 @@ public class LogisticRegression {
     }
 
     /**
-     * 
+     * apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
      * @param sentence
      * @return tagged sentence
      */
@@ -124,17 +123,17 @@ public class LogisticRegression {
     	}
     
     /**
-     * Takes a tokenized sentence as input
+     * Takes a tagged, tokenized sentence as input
      * @return a vector representing the part-of-speech counts of the input sentence
      * The sequence of features is vital here, but be intact from model on Databricks
      * https://cc-dev.cloud.databricks.com/?o=0#notebook/714597/command/729827
      */
      public ArrayList<Int> vectorizeSentence() {
 
-        // apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
-        // intialize zero vector of length (POS types)
-        // for each POS type, for each word, add one to vector dimension count
-        // return POSVectora
+//    	 Strip out all but POS tags
+//    	 intialize zero vector of length (POS types)
+//       for each POS type, for each word, add one to vector dimension count
+//       return POSVectors
      }
 
     /**
@@ -156,7 +155,7 @@ public class LogisticRegression {
      * @param score
      * @return probability that the sentence is a "body" sentence
      */
-    public Double logit(Double score) { 
+    public static Double logit(Double score) { 
         return 1 / (1 + Math.exp(-1 * score));
      }
 
