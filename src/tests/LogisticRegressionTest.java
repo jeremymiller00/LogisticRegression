@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class LogisticRegressionTest extends LogisticRegression {
 
-	@Test
+//	@Test
 //	public void testSetCoefficients() {
 //		fail("Not yet implemented");
 //	}
@@ -15,7 +15,9 @@ public class LogisticRegressionTest extends LogisticRegression {
 //		fail("Not yet implemented");
 //	}
 
+	@Test
 	public void testCalculateLRScore() {
+		System.out.println("Testing CalculateLRScore...");
         final ArrayList<Double> sentenceVector = new ArrayList<Double>();
         sentenceVector.add(1.0);
         sentenceVector.add(2.0);
@@ -30,10 +32,12 @@ public class LogisticRegressionTest extends LogisticRegression {
 
         final Double expected = 33.0;
         final Double actual = LogisticRegression.calculateLRScore(sentenceVector, coefficients, intercept);
-        assertEquals(actual, expected, 0.00001);        
+        assertEquals(actual, expected, 0.0);        
     }
 
+	@Test
     public void testLogit() {
+		System.out.println("Testing Logit...");
         final Double exponent1 = 0.0;
         final double expected1 = 0.5;
         final Double actual1 = LogisticRegression.logit(exponent1);
@@ -42,7 +46,7 @@ public class LogisticRegressionTest extends LogisticRegression {
         final Double exponent2 = 1.0;
         final Double expected2 = Math.exp(1) / (1 + Math.exp(1));
         final Double actual2 = LogisticRegression.logit(exponent2);
-        assertEquals(expected2, actual2, 0.00001);
+        assertEquals(expected2, actual2, 0.0);
 
     }
 }
