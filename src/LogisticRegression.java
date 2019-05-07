@@ -13,11 +13,18 @@
 */
 import java.io.*;
 import java.io.IOException;
-import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.lang.Math.*;
+//import edu.stanford.nlp.coref.data.CorefChain;
+import edu.stanford.nlp.ling.*;
+import edu.stanford.nlp.ie.util.*;
+import edu.stanford.nlp.pipeline.*;
+import edu.stanford.nlp.semgraph.*;
+import edu.stanford.nlp.trees.*;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+
 
 public class LogisticRegression {
 
@@ -28,7 +35,18 @@ public class LogisticRegression {
     ArrayList<Double> coefficients = new ArrayList<Double>();
     Double intercept = 0.0;
 
+    public ArrayList<String> getPartsOfSpeech() {
+        return this.partsOfSpeech;
+    }
 
+    public ArrayList<Double> getCoefficients() {
+        return this.coefficients;
+    }
+
+    public ArrayList<Double> getIntercept() {
+        return this.intercept;
+    }
+    
     /**
      * Reads in the text file containing the coefficients
      */
@@ -97,29 +115,17 @@ public class LogisticRegression {
         }
     }
     
-    
-    public ArrayList<String> getPartsOfSpeech() {
-        return this.partsOfSpeech;
-    }
-
-    public ArrayList<Double> getCoefficients() {
-        return this.coefficients;
-    }
-
-    public ArrayList<Double> getIntercept() {
-        return this.intercept;
-    }
-
+        
     /**
      * apply POS tagging to tokenized sentence WITH STOP WORDS INTACT
      * @param sentence
-     * @return tagged sentence
+     * @return sentence tags
      */
-    public String tagSentence(String sentence) {
-    	MaxentTagger tagger = new MaxentTagger("english-caseless-left3words-distsim.tagger");
-    	String tagged = tagger.tagString(sentence);
+    public List<String> setSentenceTags(CoreSentence sentence) {
+//    	MaxentTagger tagger = new MaxentTagger("english-caseless-left3words-distsim.tagger");
+    	List<String> posTags = sentence.posTags();
     	// return just the tags
-    	return tagged;
+    	return posTags;
     	}
     
     /**
@@ -128,12 +134,18 @@ public class LogisticRegression {
      * The sequence of features is vital here, but be intact from model on Databricks
      * https://cc-dev.cloud.databricks.com/?o=0#notebook/714597/command/729827
      */
-     public ArrayList<Int> vectorizeSentence() {
-
-//    	 Strip out all but POS tags
-//    	 intialize zero vector of length (POS types)
-//       for each POS type, for each word, add one to vector dimension count
-//       return POSVectors
+     public ArrayList<Integer> vectorizeSentence(List<String> posTags, ArrayList<String> partsOfSpeech) {
+    	 ArrayList<Integer> tagVector = new ArrayList<Integer>();
+    	 for (String tag : partsOfSpeech) {
+    		 int value = 0;
+    		 for (String t : posTags) {
+    			 if (tag == t) {
+    				 value ++;
+    			 }
+    		 }
+    		 tagVector.add(value);
+    	 }
+    	 return tagVector;    	 
      }
 
     /**
@@ -163,6 +175,12 @@ public class LogisticRegression {
 
     public static void main(String[] args) {
         LogisticRegression model = new LogisticRegression();
+        Properties props = new Properties();
+        props.setProperty("annotators", "pos");
+        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+        CoreDocument document = new CoreDocument(sentence); // not sure I need this
+        pipeline.annotate(document); //
+        
         model.setCoefficients();
         model.setPartsOfSpeech();
         
