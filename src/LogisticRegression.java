@@ -31,9 +31,9 @@ public class LogisticRegression {
     // private ArrayList<String> vocabulary;
     // private ArrayList<Double> coefficients;
     // private Double intercept;
-    ArrayList<String> partsOfSpeech = new ArrayList<String>();
-    ArrayList<Double> coefficients = new ArrayList<Double>();
-    Double intercept = 0.0;
+    public static ArrayList<String> partsOfSpeech = new ArrayList<String>();
+    public static ArrayList<Double> coefficients = new ArrayList<Double>();
+    public static Double intercept = 0.0;
 
     public ArrayList<String> getPartsOfSpeech() {
         return this.partsOfSpeech;
@@ -50,7 +50,7 @@ public class LogisticRegression {
     /**
      * Reads in the text file containing the coefficients
      */
-    public void setCoefficients() { //ArrayList<String>
+    public static void setCoefficients() { //ArrayList<String>
         try {
             File fileName = new File("resources/LRCoefficients.txt");
             FileReader fileReader = new FileReader(fileName);
@@ -61,8 +61,8 @@ public class LogisticRegression {
             while ((line = reader.readLine()) != null) {
                 Double c = Double.parseDouble(line);
                 coefficients.add(c);
-                System.out.println("Just added a coefficient");
             }
+            System.out.println("Set model coefficients.");
             reader.close();
         } catch (Exception e) {
             System.out.println("Could not read in the file");
@@ -73,19 +73,19 @@ public class LogisticRegression {
     /**
      * Reads in the intercept value of the logistic regression model
      */
-    public void setIntercept() {
+    public static void setIntercept() {
     	try {
-    		File filename = new File("resources/LRIntercept,txt");
+    		File fileName = new File("resources/LRIntercept.txt");
     		FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
 
             String line = null;
             
             // need to make sure there is only one value!!
-            line = reader.readLine()
+            line = reader.readLine();
             Double c = Double.parseDouble(line);
-            intercept.add(c);
-            System.out.println("Just added intercept");
+            intercept = intercept + c;
+            System.out.println("Set model intercept");
             reader.close();            
             
     	} catch (Exception e) {
@@ -96,7 +96,7 @@ public class LogisticRegression {
     /**
      * Read in parts of speech from a text file
      */
-    public void setPartsOfSpeech() { //ArrayList<String>
+    public static void setPartsOfSpeech() { //ArrayList<String>
         try {
             File fileName = new File("resources/LRPartsOfSpeech.txt");
             FileReader fileReader = new FileReader(fileName);
@@ -106,7 +106,6 @@ public class LogisticRegression {
 
             while ((line = reader.readLine()) != null) {
                 partsOfSpeech.add(line);
-                System.out.println("Just added a part of speech");
             }
             reader.close();
         } catch (Exception e) {
@@ -121,7 +120,7 @@ public class LogisticRegression {
      * @param sentence
      * @return sentence tags
      */
-    public List<String> setSentenceTags(CoreSentence sentence) {
+    public List<String> setSentenceTags(String sentence) { //CoreSentence
 //    	MaxentTagger tagger = new MaxentTagger("english-caseless-left3words-distsim.tagger");
     	List<String> posTags = sentence.posTags();
     	// return just the tags
@@ -134,12 +133,12 @@ public class LogisticRegression {
      * The sequence of features is vital here, but be intact from model on Databricks
      * https://cc-dev.cloud.databricks.com/?o=0#notebook/714597/command/729827
      */
-     public ArrayList<Integer> vectorizeSentence(List<String> posTags, ArrayList<String> partsOfSpeech) {
+     public static ArrayList<Integer> vectorizeSentence(List<String> posTags, ArrayList<String> partsOfSpeech) {
     	 ArrayList<Integer> tagVector = new ArrayList<Integer>();
     	 for (String tag : partsOfSpeech) {
     		 int value = 0;
     		 for (String t : posTags) {
-    			 if (tag == t) {
+    			 if (tag.equals(t)) {
     				 value ++;
     			 }
     		 }
@@ -183,9 +182,8 @@ public class LogisticRegression {
         
         model.setCoefficients();
         model.setPartsOfSpeech();
-        
-        
-        
+        model.setIntercept();
+        // for each sentence
         // vectorizeSentence()
         // calculateScore()
         // logit()
