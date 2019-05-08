@@ -96,4 +96,9 @@ Split into sentences using regex rules from implemented TextRank model ("\\.|[!?
 * probability gets multiplied by TextRank score
  * for words, word score mutiplied by probability of origin sentence
 
+## Done on fork of production code
+* Add LR coefficients to utils
+* Add posTags and tagVector to Key Statement data type
+
+
 
