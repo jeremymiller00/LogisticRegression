@@ -101,4 +101,10 @@ Split into sentences using regex rules from implemented TextRank model ("\\.|[!?
 * Add posTags and tagVector to Key Statement data type
 
 
+## To do on fork of production code
+* line 146 get logit score, by calling methods
+ * get tags
+ * vectorize
+ * logit
+
 
