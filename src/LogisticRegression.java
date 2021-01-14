@@ -28,9 +28,6 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class LogisticRegression {
 
-    // private ArrayList<String> vocabulary;
-    // private ArrayList<Double> coefficients;
-    // private Double intercept;
     public static ArrayList<String> partsOfSpeech = new ArrayList<String>();
     public static ArrayList<Double> coefficients = new ArrayList<Double>();
     public static Double intercept = 0.0;
@@ -183,10 +180,6 @@ public class LogisticRegression {
         model.setCoefficients();
         model.setPartsOfSpeech();
         model.setIntercept();
-        // for each sentence
-        // vectorizeSentence()
-        // calculateScore()
-        // logit()
     }
 
 }
